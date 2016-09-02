@@ -10,7 +10,7 @@ class Jugador {
 	var punteria
 	var vision
 	
-	constructor(_equipo,_posicion,_escoba,_peso,_skills,_fuerza){
+	constructor(_equipo,_posicion,_skills,_peso,_fuerza,_escoba){
 		
 		equipo = _equipo
 		posicion = _posicion
