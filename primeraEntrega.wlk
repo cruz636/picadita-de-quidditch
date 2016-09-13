@@ -1,51 +1,47 @@
 class Jugador {
 	
 	var equipo
-	var posicion 
-	var peso
 	var skills
-	var escoba
+	var peso
 	var fuerza
-	var reflejos
-	var punteria
-	var vision
+	var escoba
 	
-	constructor(_equipo,_posicion,_skills,_peso,_fuerza,_escoba){
+	
+	constructor(_equipo,_skills,_peso,_fuerza,_escoba){
 		
 		equipo = _equipo
-		posicion = _posicion
-		escoba = _escoba
-		peso =_peso
 		skills = _skills
+		peso = _peso
 		fuerza = _fuerza
+		escoba = _escoba
 		
+		equipo.agregar(self)
 	}
 	
-	method punteria() = punteria
-	method vision() = vision
-	method punteria(_punteria){punteria = _punteria}
-	method vision(_vision){vision = _vision}
-	
 
-	method nivelDeManejo()= self.skills() / self.peso() // para dividir poner flotantes (ej 2.0)
+	method skills()
+	method peso()
+	method fuerza()
+	method escoba()
+	
+	method habilidad()
+	
+	
+	method nivelDeManejo()= self.skills() / self.peso() 
 	
 	method velocidad() = escoba.velocidadEscoba() * self.nivelDeManejo()
 	
-	method habilidad()= posicion.habilidad(self)
-	
-	method reflejos(){ 
-		reflejos = (self.velocidad() * skills * 0.01)
-		return reflejos
-	}
 	
 	
-	method fuerza(){return fuerza}
-	method skills(){return skills}
+	
+	
+	
+	
 	method pierdeSkills(cantidad){ skills -= cantidad}
-	method peso(){return peso}
-	
+		
 	
 	method lePasaElTrapo(jugadorDos)= self.habilidad() > (jugadorDos.habilidad() * 2)
+	
 	method golpeado(){ 
 		if (escoba == saetaDeFuego){
 			self.pierdeSkills(2)
@@ -56,6 +52,97 @@ class Jugador {
 		
 	}
 }
+
+
+
+
+// posiciones
+
+class Cazador inherits Jugador{
+
+	
+	var punteria
+	constructor(_equipo,_skills,_peso,_fuerza,_escoba,_punteria)=super(_equipo,_skills,_peso,_fuerza,_escoba){
+		punteria = _punteria
+
+	}
+	
+	method punteria() = punteria
+	override method skills() = skills
+	override method peso() = peso
+	override method fuerza() = fuerza
+	override method escoba() = escoba
+	override method habilidad()= self.velocidad() + self.skills() + self.punteria() * self.fuerza() 
+}
+
+class Guardian inherits Jugador{
+
+	var reflejos
+	
+	constructor(_equipo,_skills,_peso,_fuerza,_escoba)=super(_equipo,_skills,_peso,_fuerza,_escoba)
+	
+	method nivelDeReflejos() = (self.velocidad() * self.skills() / 100 )+ 20
+
+	 method reflejos(){ 
+		reflejos = (self.velocidad() * skills * 0.01)
+		return reflejos
+	}
+	override method skills() = skills
+	override method peso() = peso
+	override method fuerza() = fuerza
+	override method escoba() = escoba
+	override method habilidad()= self.velocidad() + self.skills() + self.nivelDeReflejos() + self.fuerza() 
+
+	
+}
+
+class Golpeador inherits Jugador{
+
+	var punteria
+	
+	constructor(_equipo,_skills,_peso,_fuerza,_escoba,_punteria)=super(_equipo,_skills,_peso,_fuerza,_escoba){
+		punteria = _punteria
+	}
+	
+	
+
+	override method skills() = skills
+	override method peso() = peso
+	override method fuerza() = fuerza
+	override method escoba() = escoba
+	method punteria() = punteria
+	override method habilidad()= self.velocidad() + self.skills() + self.punteria() + self.fuerza() 
+
+	
+}
+
+class Buscadores inherits Jugador{
+
+	var nivelDeVision
+	var reflejos
+	
+	constructor(_equipo,_skills,_peso,_fuerza,_escoba,_vision)=super(_equipo,_skills,_peso,_fuerza,_escoba){
+		nivelDeVision = _vision
+	}
+	
+	method nivelDeReflejos() = (self.velocidad() * self.skills() / 100 )
+
+	method nivelDeVision() = nivelDeVision
+	
+	method reflejos(){ 
+		reflejos = (self.velocidad() * skills * 0.01)
+		return reflejos
+	}
+	override method skills() = skills
+	override method peso() = peso
+	override method fuerza() = fuerza
+	override method escoba() = escoba
+	override method habilidad()= self.velocidad() + self.skills() + self.nivelDeReflejos() * self.nivelDeVision()
+
+	
+}
+
+
 
 //escobas
 
@@ -83,46 +170,26 @@ object saetaDeFuego{
 }
 
 
-
-// posiciones
-
-object cazador{
-	method habilidad(jugador)= jugador.velocidad() + jugador.skills() + jugador.punteria() * jugador.fuerza() 
-}
-
-object guardian{
-	var reflejos
-	method reflejos(jugador){
-		reflejos = jugador.reflejos() + 20 }
-		
-	method habilidad(jugador) = jugador.velocidad() + jugador.skills() + reflejos + jugador.fuerza()
-}
-
-object golpeador{
-	method habilidad(jugador) = jugador.velocidad() + jugador.skills() + jugador.punteria() + jugador.fuerza()
-}
-
-object buscador{
-	
-	method habilidad(jugador)= jugador.velocidad() + jugador.skills() + jugador.reflejos() + jugador.vision()
-}
-
 //equipos
 
 class Equipo{
 	var nombre
-	var puntos = 0
+	//var puntos = 0
 	var jugadores = []
 	
 	constructor(_nombre){
 		nombre = _nombre
 	}
 	method nombre() = nombre
-	method puntos() = puntos
-	method sumarPuntos(sumar){puntos += sumar}
+	//method puntos() = puntos
+	//method sumarPuntos(sumar){puntos += sumar}
 	
 	method agregar(jugador){
 		jugadores.add(jugador)
 	}
 
 }
+
+
+
+
