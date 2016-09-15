@@ -1,0 +1,89 @@
+import picadita.*
+
+test "Manejo de escoba de harry" {
+	var gryffindor = new Equipo("gryffindor")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	assert.equals(0.5,harry.nivelDeManejo())
+
+}
+
+test "La velocidad de Ron es 32 y la de su escoba 16"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2001 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2001)
+	assert.equals(16,ron.velocidad())
+}
+
+test "La velocidad de Malfoy es 35.1"{
+	var slytherin = new Equipo("Slytherin")
+	var nimbus2001 = new Nimbus(1,2001)
+	var malfoy = new Buscador(slytherin,27.0,50.0,30.0,nimbus2001,7)
+	assert.equals(35.1,malfoy.velocidad())
+}
+
+test "Velocidad de harry es 50"{
+	var gryffindor = new Equipo("gryffindor")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	assert.equals(50,harry.velocidad())
+}
+
+
+test "Habilidad de harry es 110"{
+	var gryffindor = new Equipo("gryffindor")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	assert.equals(110,harry.habilidad())
+}
+
+test "habilidad de Ginny es 282"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	assert.equals(282,ginny.habilidad())
+}
+
+test "habilidad de fred es 240"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2001 = new Nimbus(0.8,2001)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,nimbus2001,18)
+	assert.equals(240,fred.habilidad())
+}
+
+test "habilidad de Ron es 120.8"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2001 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2001)
+	assert.equals(120.8,ron.habilidad())
+	
+}
+
+
+test "fred le pasa el trapo a Miles, pero no a Wattington"{
+	var gryffindor = new Equipo("gryffindor")
+	var slytherin = new Equipo("Slytherin")
+	var nimbus2001 = new Nimbus(0.8,2001)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,nimbus2001,18)
+	
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	//assert.that(fred.lePasaElTrapo(miles))
+	assert.notThat(fred.lePasaElTrapo(warrington))
+		
+}
+
+test "Si crabbe es golepado sus skil pasan a 78"{
+	var slytherin = new Equipo("Slytherin")
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	crabbe.golpeado()
+	assert.equals(78,crabbe.skills())
+}
+
+test "ron es golpeado , sus skills pasan a 28 y su nimbus queda con 40% de salud"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2001 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2001)
+	
+	ron.golpeado()
+	assert.equals(28,ron.skills())
+	assert.equals(0.4,nimbus2001.salud())
+}
