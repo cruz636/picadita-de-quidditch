@@ -116,7 +116,7 @@ class Golpeador inherits Jugador{
 	
 }
 
-class Buscadores inherits Jugador{
+class Buscador inherits Jugador{
 
 	var nivelDeVision
 	var reflejos
@@ -189,7 +189,3 @@ class Equipo{
 	}
 
 }
-
-
-
-
