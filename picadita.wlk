@@ -40,7 +40,7 @@ class Jugador {
 	method pierdeSkills(cantidad){ skills -= cantidad}
 		
 	
-	method lePasaElTrapo(jugadorDos)= self.habilidad() > (jugadorDos.habilidad() * 2)
+	method lePasaElTrapo(jugadorDos)= self.habilidad() >= (jugadorDos.habilidad() * 2)
 	
 	method golpeado(){ 
 		if (escoba == saetaDeFuego){
@@ -172,20 +172,40 @@ object saetaDeFuego{
 
 //equipos
 
+object mercadoDeEscobas{
+	var velocidad
+	method velocidadMercado()= velocidad
+	method velocidadMercado(_velocidad){velocidad = _velocidad}
+	
+}
+
 class Equipo{
 	var nombre
-	//var puntos = 0
+	
+	
 	var jugadores = []
+	
 	
 	constructor(_nombre){
 		nombre = _nombre
 	}
+	method jugadores()=jugadores
 	method nombre() = nombre
-	//method puntos() = puntos
-	//method sumarPuntos(sumar){puntos += sumar}
 	
 	method agregar(jugador){
 		jugadores.add(jugador)
 	}
+	
+	method cantidadJugadores() = jugadores.size()
+	method promedio() = jugadores.sum({unJugador => unJugador.habilidad()}) / self.cantidadJugadores()
+	
+	method jugadoresGrosos() = jugadores.filter({unJugador => unJugador.habilidad() > self.promedio() && unJugador.velocidad() >= mercadoDeEscobas.velocidadMercado()}) 
+			
+	method pasadorDeTrapos() = jugadores.filter({unJugador,otroJugador => unJugador.lePasaElTrapo(otroJugador) && unJugador != otroJugador})
+	
+	//method jugadorEstrella(equipo2){
+		//self.pasadorDeTrapos().all({pasador => pasador.lePasaElTrapo()})
+	//} 
+	
 
 }
