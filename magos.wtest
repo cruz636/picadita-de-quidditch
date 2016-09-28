@@ -57,7 +57,7 @@ test "habilidad de Ron es 120.8"{
 }
 
 
-test "fred le pasa el trapo a Miles, pero no a Wattington"{
+test "fred le pasa el trapo a Miles, pero no a Warrington"{
 	var gryffindor = new Equipo("gryffindor")
 	var slytherin = new Equipo("Slytherin")
 	var nimbus2001 = new Nimbus(0.8,2001)
@@ -66,7 +66,7 @@ test "fred le pasa el trapo a Miles, pero no a Wattington"{
 	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
 	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
 	
-	//assert.that(fred.lePasaElTrapo(miles))
+	assert.that(fred.lePasaElTrapo(miles))
 	assert.notThat(fred.lePasaElTrapo(warrington))
 		
 }
@@ -86,4 +86,33 @@ test "ron es golpeado , sus skills pasan a 28 y su nimbus queda con 40% de salud
 	ron.golpeado()
 	assert.equals(28,ron.skills())
 	assert.equals(0.4,nimbus2001.salud())
+}
+
+test "De gryffindor son grosos Fred,Angelina y Katie. De Slytherin Warrington y Montague"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	var nimbus2001 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2001)
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	assert.equals([angelina,fred,katie],gryffindor.jugadoresGrosos())
+	assert.equals([graham,warrington],slytherin.jugadoresGrosos())
+	
 }
