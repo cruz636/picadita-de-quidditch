@@ -26,7 +26,7 @@ class Jugador {
 	
 	method habilidad()
 	
-	
+	method nivelDeReflejos() = (self.velocidad() * self.skills() / 100 )
 	method nivelDeManejo()= self.skills() / self.peso() 
 	
 	method velocidad() = escoba.velocidadEscoba() * self.nivelDeManejo()
@@ -41,6 +41,9 @@ class Jugador {
 		
 	
 	method lePasaElTrapo(jugadorDos)= self.habilidad() >= (jugadorDos.habilidad() * 2)
+	
+	
+	method esGroso() =  self.habilidad() > equipo.promedio() && self.velocidad() >= mercadoDeEscobas.velocidadMercado() 
 	
 	method golpeado(){ 
 		if (escoba == saetaDeFuego){
@@ -77,16 +80,13 @@ class Cazador inherits Jugador{
 
 class Guardian inherits Jugador{
 
-	var reflejos
+	
 	
 	constructor(_equipo,_skills,_peso,_fuerza,_escoba)=super(_equipo,_skills,_peso,_fuerza,_escoba)
 	
-	method nivelDeReflejos() = (self.velocidad() * self.skills() / 100 )+ 20
+	override method nivelDeReflejos() = (self.velocidad() * self.skills() / 100 ) + 20
 
-	 method reflejos(){ 
-		reflejos = (self.velocidad() * skills * 0.01)
-		return reflejos
-	}
+	 
 	override method skills() = skills
 	override method peso() = peso
 	override method fuerza() = fuerza
@@ -119,20 +119,17 @@ class Golpeador inherits Jugador{
 class Buscador inherits Jugador{
 
 	var nivelDeVision
-	var reflejos
+	
 	
 	constructor(_equipo,_skills,_peso,_fuerza,_escoba,_vision)=super(_equipo,_skills,_peso,_fuerza,_escoba){
 		nivelDeVision = _vision
 	}
 	
-	method nivelDeReflejos() = (self.velocidad() * self.skills() / 100 )
+	
 
 	method nivelDeVision() = nivelDeVision
 	
-	method reflejos(){ 
-		reflejos = (self.velocidad() * skills * 0.01)
-		return reflejos
-	}
+	
 	override method skills() = skills
 	override method peso() = peso
 	override method fuerza() = fuerza
@@ -181,8 +178,7 @@ object mercadoDeEscobas{
 
 class Equipo{
 	var nombre
-	
-	
+
 	var jugadores = []
 	
 	
@@ -199,8 +195,7 @@ class Equipo{
 	method cantidadJugadores() = jugadores.size()
 	method promedio() = jugadores.sum({unJugador => unJugador.habilidad()}) / self.cantidadJugadores()
 	
-	method jugadoresGrosos() = jugadores.filter({unJugador => unJugador.habilidad() > self.promedio() && unJugador.velocidad() >= mercadoDeEscobas.velocidadMercado()}) 
-			
+	method jugadoresGrosos() = jugadores.filter({unJugador => unJugador.esGroso()})
 	method pasadorDeTrapos() = jugadores.filter({unJugador,otroJugador => unJugador.lePasaElTrapo(otroJugador) && unJugador != otroJugador})
 	
 	//method jugadorEstrella(equipo2){
