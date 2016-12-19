@@ -1,348 +1,840 @@
 import picadita.*
-  
-test "nivel de manejo de harry de 0.5"{
-	
-	assert.that(jugador.harryPotter().nivelDeManejoDeEscoba()==0.5)
-}
-test "velocidadde ron es 16"{
-	assert.that(jugador.ronWeasley().velocidad()==16)
-	
-}
-test "velocidad de harry es 50"{
-	assert.that(jugador.harryPotter().velocidad()==50)
-}
-test "velocidad de draco 35,1.
-"{assert.that(jugador.dracoMalfoy().velocidad()==35.1)}
-test "habilidad de harry 110"{
-	assert.that(jugador.harryPotter().habilidad()==110)
-}
-test "habilidad de ginny" {
-	assert.that(jugador.ginnyWeasley().habilidad()==282)
-}
-test "habilidad de fred 240"{
-	assert.that(jugador.fredWeasley().habilidad()==240)
-}
-test "habiliadad de ron 120.8"{
-	assert.that(jugador.ronWeasley().habilidad()==120.8)
-}
-test "Fred Weasley debería pasarle el trapo a Miles Bletchley "{
-	assert.that(jugador.fredWeasley().lePasaElTrapo(jugador.milesBleatchley()))
-	}
-test "fred Weasley no deberia pasar el trapo a warrington"
-{assert.notThat(jugador.fredWeasley().lePasaElTrapo(jugador.warrington()))}
 
-test "en Gryffindor sólo Fred, Angelina y Katie son grosos"{
-	const fred=jugador.fredWeasley()
-	const katie= jugador.katieBell()
-	const angelina=jugador.angelinaJohnson()
-	const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),fred,jugador.georgeWeasley(),jugador.ginnyWeasley(),katie,angelina})
+test "Manejo de escoba de harry de 0,5" {
+	var gryffindor = new Equipo("gryffindor")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	assert.equals(0.5,harry.nivelDeManejo())
+
+}
+
+test "La velocidad de Ron es 32 y la de su escoba 16"{
+	var gryffindor = new Equipo("gryffindor")
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,new Nimbus(0.5,2000))
+	assert.equals(16.0,ron.velocidad())
+	assert.equals(32.0,ron.escoba().velocidadEscoba())
 	
-	assert.that(gryffindor.jugadoresGrosos()==#{fred,katie,angelina})
 }
-test "de Slytherin sólo Warrington y Montague son grosos"{
-	const warrington=jugador.warrington()
- 	const montague=jugador.grahamMontague()
-	const slytherin=new Equipo(#{jugador.adrianPaucey(),warrington,montague,jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.gregoryGoyle(),jugador.vincentCrabbe()})
- 	
- 	assert.that(slytherin.jugadoresGrosos()==#{warrington,montague})
+
+test "La velocidad de Malfoy es 35.1"{
+	var slytherin = new Equipo("Slytherin")
+	var nimbus2001 = new Nimbus(1,2001)
+	var malfoy = new Buscador(slytherin,27.0,50.0,30.0,nimbus2001,7)
+	assert.equals(35.1,malfoy.velocidad())
 }
-test "Si Ron es golpeado por una bludger sus skills pasan a ser 28 y su Nimbus queda con 40% de salud"{
-	const ron=jugador.ronWeasley()
-	ron.golpeadoPorBludger()
-	assert.that(ron.skills()==28&&ron.escoba().salud()==40)
-	}
-test "Si Crabbe es golpeado por una bludger sus skills pasan a ser 78"{
-	const crabbe=jugador.vincentCrabbe()
-	crabbe.golpeadoPorBludger()
-	assert.that(crabbe.skills()==78)
+
+test "Velocidad de harry es 50"{
+	var gryffindor = new Equipo("gryffindor")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	assert.equals(50,harry.velocidad())
 }
-test "Slytherin tiene jugador estrella contra Gryffindor"{
-	const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()
-	})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- 	assert.that(slytherin.jugadorEstrella(gryffindor))
+
+
+test "Habilidad de harry es 110"{
+	var gryffindor = new Equipo("gryffindor")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	assert.equals(110,harry.habilidad())
 }
-test "gryffindor no tiene un jugador estrella contra slytherin"{
-	const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()
-	})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- 	assert.notThat(gryffindor.jugadorEstrella(slytherin))
+
+test "habilidad de Ginny es 282"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	assert.equals(282,ginny.habilidad())
 }
-test "si ginny tiene la quaffle, gryffindor debe estar en posesion tambien y no slytherin"{
-	const ginny= jugador.ginnyWeasley()
-	const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),ginny,jugador.katieBell(),jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- 	
-	ginny.portarQuaffle()
-	assert.that(gryffindor.alguienTieneQuaffle()and !slytherin.alguienTieneQuaffle())
+
+test "habilidad de fred es 240"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2001 = new Nimbus(0.8,2001)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,nimbus2001,18)
+	assert.equals(240,fred.habilidad())
 }
-test "Si Ginny que es cazadora obtiene la Quaffle, es ella quien tiene la Quaffle."{
-	const ginny= jugador.ginnyWeasley()
-	const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),ginny,jugador.katieBell(),jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
+
+test "habilidad de Ron es 120.8"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2000)
+	assert.equals(120.8,ron.habilidad())
 	
-	ginny.robarQuaffle(slytherin)
+}
+
+
+test "fred le pasa el trapo a Miles, pero no a Wattington"{
+	var gryffindor = new Equipo("gryffindor")
+	var slytherin = new Equipo("Slytherin")
+	var nimbus2001 = new Nimbus(0.8,2001)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,nimbus2001,18)
+	
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	assert.that(fred.lePasaElTrapo(miles))
+	assert.notThat(fred.lePasaElTrapo(warrington))
+		
+}
+
+test "Si crabbe es golepado sus skil pasan a 78"{
+	var slytherin = new Equipo("Slytherin")
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	crabbe.golpeado()
+	assert.equals(78,crabbe.skills())
+}
+
+test "ron es golpeado , sus skills pasan a 28 y su nimbus queda con 40% de salud"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2000)
+	
+	ron.golpeado()
+	assert.equals(28,ron.skills())
+	assert.equals(0.4,nimbus2000.salud())
+}
+
+test "De gryffindor son grosos Fred,Angelina y Katie. De Slytherin Warrington y Montague"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2000)
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	assert.equals([angelina,fred,katie],gryffindor.jugadoresGrosos())
+	assert.equals([graham,warrington],slytherin.jugadoresGrosos())
+	
+}
+
+test "slytherin tiene jugador estrella contra gryffindor. La inversa no es cierta"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2000)
+	
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	assert.that(slytherin.jugadorEstrella(gryffindor))
+	//assert.notThat(gryffindor.jugadorEstrella(slytherin))
+		
+}
+
+test "si ginny tiene la quaffle, gryffindor la tiene y no slyhterin"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2000 = new Nimbus(0.5,2000)	
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	var slytherin = new Equipo("slytherin")
+	ginny.poseeQuaffle(true)
+	
+	assert.that(gryffindor.tieneQuaffle())
+	assert.notThat(slytherin.tieneQuaffle())
+}
+
+test " si ginny obtiene la quaffle, debe ser ella quien la tiene"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2000)
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	ginny.obtenerQuaffle()
 	assert.that(ginny.poseeQuaffle())
 }
-test "Si Miles que es guardián obtiene la Quaffle, debería ser Graham quien tiene la Quaffle."{
-	const miles=jugador.milesBleatchley()
-	const graham=jugador.grahamMontague()
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),graham,jugador.dracoMalfoy(),miles,jugador.warrington(),jugador.gregoryGoyle()])
- const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	miles.robarQuaffle(gryffindor)
+
+test "Si Miles que es guardián obtiene la Quaffle, debería ser graham quien tiene la Quaffle, por ser el más habilidoso de su equipo que puede obtenerla"{
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	mercadoDeEscobas.velocidadMercado(50.0)
+	
+	miles.obtenerQuaffle()
 	assert.that(graham.poseeQuaffle())
- 	
-}
-test"Si Slytherin obtiene la Quaffle se la queda Warrington por ser el más veloz que puede obtenerla."{
-	const warrington=jugador.warrington()
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),warrington,jugador.gregoryGoyle()])
- const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	slytherin.obtenerQuaffle(gryffindor)
-	assert.that(warrington.poseeQuaffle())
+	
+	
 }
 
-test "Si Gryffindor tiene la Quaffle, no debería poder obtenerla nuevamente."{
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- 	const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	gryffindor.portadores().anyOne().robarQuaffle(slytherin)
-	assert.that(!gryffindor.puedeRobar())
+
+test "Si Slytherin obtiene la Quaffle se la queda Warrington por ser el más veloz que puede obtenerla"{
+
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	mercadoDeEscobas.velocidadMercado(50.0)
+
+	slytherin.obtenerQuaffle()
+	assert.that(warrington.poseeQuaffle())
+	
 }
-test"Si la Quaffle está en manos de Ginny y la pierde contra Slytherin, Warrington debería tener la Quaffle"{
-	const warrington=jugador.warrington()
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),warrington,jugador.gregoryGoyle()])
- 	const ginny=jugador.ginnyWeasley()
- 	const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),ginny,jugador.katieBell(),jugador.angelinaJohnson()})
-	ginny.portarQuaffle()
+
+test "Si Gryffindor tiene la Quaffle, no debería poder obtenerla nuevamente"{
+	var gryffindor = new Equipo("gryffindor")
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2000)
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	gryffindor.obtenerQuaffle()
+	assert.notThat(gryffindor.puedeObtenerQuaffle())
+}
+
+
+test "Si la Quaffle está en manos de Ginny y la pierde contra Slytherin, Warrington debería tener la Quaffle y no Ginny.
+"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2000)
+	
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	
+	ginny.obtenerQuaffle()
 	ginny.perderQuaffle(slytherin)
-	assert.that(warrington.poseeQuaffle())
-}
-
-test "Si la Quaffle está en manos de Ginny, Katie no debería poder perder la Quaffle contra Slytherin."{
-	const ginny=jugador.ginnyWeasley()
-	const katie=jugador.katieBell()
-	const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),ginny,katie,jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- 	
-	ginny.portarQuaffle()
-	assert.that(gryffindor.quienTieneLaQuaffle()!=katie)
-	
+	assert.equals(1,quaffle.jugadorConQuaffle())
+	assert.notThat(ginny.poseeQuaffle())
 	
 }
 
-test "Si la Quaffle está en manos de Ginny y es golpeada por una Bludger, Slytherin debería tener la Quaffle."{
-		const ginny=jugador.ginnyWeasley()	
-		const gryffindor=new Equipo(#{jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),ginny,jugador.katieBell(),jugador.angelinaJohnson()})
-		const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- 	ginny.portarQuaffle()
- 	ginny.golpeadoPorBludgerEnemiga(slytherin)
- 	assert.that(slytherin.alguienTieneQuaffle())
-		}
 
-test "Si Harry hace una jugada contra Slytherin con mala suerte, al terminar su jugada no encuentra la Snitch."{
-	const harry=jugador.harryPotter()
-	const gryffindor=new Equipo(#{harry,jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- harry.realizarJugadaTest(slytherin,malaSuerte.tieneSuerte())
- assert.notThat(harry.encontroSnitch())
-}
-test "Si Harry hace una jugada contra Slytherin con buena suerte, encuentra la Snitch"{
-	const harry=jugador.harryPotter()
-	const gryffindor=new Equipo(#{harry,jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- harry.realizarJugadaTest(slytherin,buenaSuerte.tieneSuerte())
- assert.that(harry.encontroSnitch())
-}
-
-
-test "Si Harry está persiguiendo la Snitch estando a 4000 metros de distancia de atraparla y hace una jugada contra Slytherin, queda a 3900 metros de distancia."{
-	const harry=jugador.harryPotter()
-	const gryffindor=new Equipo(#{harry,jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- harry.recorrer(1000)
- harry.vioSnitch(true) 
- 
- harry.realizarJugada(slytherin)
-assert.that(harry.metrosPorAlcanzar()==3900)
-}
-test "Si Gryffindor tiene 30 puntos y Harry está persiguiendo la Snitch estando a 75 metros de distancia de atraparla y 
-hace una jugada contra Slytherin, Gryffindor queda con 180 puntos y los skills de Harry quedan en 60."{
-	const harry=jugador.harryPotter()
-	const gryffindor=new Equipo(#{harry,jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
-  gryffindor.aumentarPuntaje(30)
-  harry.vioSnitch(true)
-  harry.recorrer(4925)
-  harry.realizarJugada(slytherin)
-  assert.that(gryffindor.puntaje()==180 and harry.skills()==60)
-}
-
-test"Si Harry estaba buscando la Snitch desde hace 3 turnos y lo golpea una Bludger de Slytherin, 
-debería perder los turnos de búsqueda acumulados."{
-	const harry=jugador.harryPotter()
-	const gryffindor=new Equipo(#{harry,jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- 
- 	3.times({harry.buscar(suerteReal.tieneSuerte())})
- 	harry.golpeadoPorBludgerEnemiga(slytherin)
- 	assert.that(harry.turnos()==0 and !harry.encontroSnitch())
-}
-test"Si Harry estaba persiguiendo la Snitch estando a 75 metros de distancia de atraparla y 
-lo golpea una Bludger de Slytherin, debería haber perdido de vista la Snitch, y al encontrarla 
-nuevamente estará a 5000 metros de distancia."{
-	const harry=jugador.harryPotter()
-	const gryffindor=new Equipo(#{harry,jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
- harry.recorrer(4925)
- harry.golpeadoPorBludgerEnemiga(slytherin)
- assert.that(!harry.vioSnitch() )
- harry.vioSnitch(true)
- assert.that(harry.metrosPorAlcanzar()==5000)
-}
-test"Si Harry (luego de ganar 100 puntos de skills) estaba persiguiendo la Snitch estando
- a 75 metros de distancia de atraparla y lo golpea una Bludger de Slytherin, no debería haber
- perdido de vista la Snitch porque sólo quedó aturdido. Luego de hacer una jugada debería seguir 
-estando a 75 metros, y luego de una segunda jugada debería tener 158 de skills por atrapar la Snitch."{
-	const harry=jugador.harryPotter()
-	const gryffindor=new Equipo(#{harry,jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()})
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
-	harry.perderSkills(-100)
-	harry.vioSnitch(true)
-	harry.recorrer(4925)
-	harry.golpeadoPorBludgerEnemiga(slytherin)
-	assert.that(harry.vioSnitch())
-	harry.realizarJugada(slytherin)
-	assert.that(harry.metrosPorAlcanzar()==75)
-	harry.realizarJugada(slytherin)
-	assert.that(harry.skills()==158)
-}
-
-test "Si Fred hace una jugada contra Slytherin, con Ginny teniendo la Quaffle y Malfoy a 100 metros de conseguir
- la Snitch, elige como blanco (de entre Malfoy, Montague y Bletchley) a Montague. Su puntería no es suficiente alta, 
-pero con buena suerte lo golpea y sus skills quedan en 85, mientras que los de Montague quedan en 33."{
-	const fred=jugador.fredWeasley()
-	const ginny=jugador.ginnyWeasley()
-	const draco=jugador.dracoMalfoy()
-	const montague=jugador.grahamMontague()
-	const gryffindor=new Equipo([jugador.harryPotter(),jugador.ronWeasley(),fred,jugador.georgeWeasley(),ginny,jugador.katieBell(),jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),montague,draco,jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
+test "Si la Quaffle está en manos de Ginny, Katie no debería poder perder la Quaffle contra Slytherin"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	var nimbus2000 = new Nimbus(0.5,2000)
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,nimbus2000)
+	
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,nimbus2000,5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	
 	ginny.poseeQuaffle(true)
-	draco.vioSnitch(true)
-	draco.recorrer(4900)
-	fred.realizarJugada(slytherin,buenaSuerte.tieneSuerte())
-	assert.that(slytherin.mejorObjetivo(gryffindor)==montague)
-	assert.that(fred.skills()==85)
-	assert.that(montague.skills()==33)
+	
+	assert.notThat(katie.puedePerderQuaffle())
 }
-test"Si Goyle hace una jugada contra Gryffindor, con Ginny teniendo la Quaffle y Harry buscando la Snitch,
- elige como blanco a Ginny. Tiene mala suerte y no logra golpear a Ginny,
- sus skills quedan en 70 y Ginny sigue teniendo la Quaffle.
-"{
-	const goyle=jugador.gregoryGoyle()
-	const ginny= jugador.ginnyWeasley()
-	const harry= jugador.harryPotter()
-	const gryffindor=new Equipo([harry,jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),ginny,jugador.katieBell(),jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),goyle])
-	ginny.poseeQuaffle(true)
-	harry.realizarJugada(slytherin)
-	goyle.realizarJugada(gryffindor,false)
-	assert.that(ginny.poseeQuaffle())
-	assert.that(goyle.skills()==70)
-}
-test "Si Goyle hace una jugada contra Gryffindor,elige como blanco a Ginny. Aunque tenga mala
- suerte puede golpear a Ginny, sus skills quedan en 75 y Ginny ya no tiene la Quaffle.
-"{
-	const goyle=jugador.gregoryGoyle()
-	const ginny= jugador.ginnyWeasley()
-	const harry= jugador.harryPotter()
-	const gryffindor=new Equipo([harry,jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),ginny,jugador.katieBell(),jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),goyle])
-	ginny.poseeQuaffle(true)
-	ginny.perderSkills(2)
-	harry.realizarJugada(slytherin)
-	goyle.realizarJugada(gryffindor,false)
-	assert.that(goyle.skills()==75)
-	assert.that(!ginny.poseeQuaffle())
+
+
+test " Si la Quaffle está en manos de Ginny y es golpeada por una Bludger de Slytherin, Slytherin debería tener la Quaffle"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,new Nimbus(0.5,2000))
+	
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	
+	ginny.obtenerQuaffle()
+	ginny.golpeado(slytherin)
+	assert.that(slytherin.tieneQuaffle())
+	
 	
 }
-test"Un bloqueo de Slytherin a Katie, incluso con mala suerte, es exitoso porque Montague le pasa el trapo,
- con lo cual Katie queda con 42 puntos de skills y Montague con 38.
+
+
+test "Un bloqueo de Gryffindor a Montague 
+con mala suerte no es exitoso. No deberían modificarse los skills de Montague
 "{
-	const katie=jugador.katieBell()
-	const montague=jugador.grahamMontague()
-	const gryffindor=new Equipo([jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),katie,jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),montague,jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
-	katie.poseeQuaffle(true)
-	slytherin.bloquearTest(katie,false)
-	assert.that(katie.skills()==42)
-	assert.that(montague.skills()==38)
-}
-test "Un bloqueo de Gryffindor a Montague con mala suerte no es exitoso. No deberían modificarse No se modifican los skills de Montague."{
-	const montague=jugador.grahamMontague()
-	const gryffindor=new Equipo([jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),montague,jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
-	montague.poseeQuaffle(true)
-	gryffindor.bloquearTest(montague,false)
-	assert.that(montague.skills()==35)
-}
-test"Si Ron gana 200 puntos skills, cambia su escoba por una Nimbus 2016 en perfecto estado, un bloqueo de Gryffindor a Montague
- con mala suerte será exitoso. Los skills de Montague quedan en 32 y los de Ron en 240."
- {const ron=jugador.nuevoRon()
- 	const montague=jugador.grahamMontague()
- 	const gryffindor=new Equipo([jugador.harryPotter(),ron,jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),montague,jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
-	ron.perderSkills(-200)
-	montague.poseeQuaffle(true)
-	gryffindor.bloquearTest(montague,false)
+	var gryffindor = new Equipo("gryffindor")
+		
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,new Nimbus(0.5,2000))
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+
+	var slytherin = new Equipo("Slytherin")
 	
-	assert.that(ron.skills()==240)
-	assert.that(montague.skills()==32)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	graham.obtenerQuaffle()
+	var skillsAnteriores = graham.skills()
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(malaSuerte)
+	
+	
+	gryffindor.bloquear(graham)
+	
+	
+	
+	assert.equals(skillsAnteriores,graham.skills())
+	
+	
+}
+
+
+test "Un bloqueo de Gryffindor a Montague con buena suerte es exitoso, con lo cual los skills 
+de Montague quedan en 32 y los de Katie (la más veloz que puede bloquear) quedan en 48."{
+	var gryffindor = new Equipo("gryffindor")
+		
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,new Nimbus(0.5,2000))
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+
+	var slytherin = new Equipo("Slytherin")
+	
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	graham.obtenerQuaffle()
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(buenaSuerte)
+	
+	
+	gryffindor.bloquear(graham)
+	
+	
+	
+	assert.equals(32,graham.skills())
+	assert.equals(48,katie.skills())
+	
+	
+}
+
+
+
+
+test "Si Harry que está empezando la búsqueda de la Snitch hace una jugada contra Slytherin con mala suerte,
+ al terminar su jugada no encontró la Snitch"{
+ 	var gryffindor = new Equipo("gryffindor")
+ 	var slytherin = new Equipo("slytherin")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	suerte.tipoDeSuerte(malaSuerte)
+	
+	harry.hacerJugada(slytherin)
+	assert.notThat(harry.encontroSnitch())
  }
- test"Si Warrington tiene la Quaffle y Montague hace una jugada contra
- Gryffindor, sus skills no varían, los puntos tampoco y la Quaffle la sigue teniendo Warrington.
-"{const warrington=jugador.warrington()
-	const montague=jugador.grahamMontague()
-	const gryffindor=new Equipo([jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),montague,jugador.dracoMalfoy(),jugador.milesBleatchley(),warrington,jugador.gregoryGoyle()])
-	const puntaje=slytherin.puntaje()
-	warrington.poseeQuaffle(true)
-	montague.realizarJugada(gryffindor)
-	assert.that(montague.skills()==35)
-	assert.that(warrington.skills()==32)
-	assert.that(slytherin.puntaje()==puntaje)
-	assert.that(warrington.poseeQuaffle())
+
+ test "Si Harry hace una jugada contra Slytherin con buena suerte, encuentra la Snitch."{
+	var gryffindor = new Equipo("gryffindor")
+ 	var slytherin = new Equipo("slytherin")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	suerte.tipoDeSuerte(buenaSuerte)
+	
+	harry.hacerJugada(slytherin)
+	assert.that(harry.encontroSnitch())
+}
+
+
+test "Si Harry está persiguiendo la Snitch estando a 4000 metros de distancia de atraparla y hace una jugada contra Slytherin,
+ queda a 3900 metros de distancia"{
+	var gryffindor = new Equipo("gryffindor")
+ 	var slytherin = new Equipo("slytherin")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	suerte.tipoDeSuerte(buenaSuerte)
+	
+	
+	harry.metrosRecorridos(1000)
+	harry.hacerJugada(slytherin)
+	assert.equals(1100,harry.metrosRecorridos())
+}
+
+
+test "Si Gryffindor tiene 30 puntos y Harry está persiguiendo la Snitch estando a 75
+ metros de distancia de atraparla y hace una jugada contra Slytherin, 
+Gryffindor queda con 180 puntos y los skills de Harry quedan en 60."{
+	var gryffindor = new Equipo("gryffindor")
+	gryffindor.puntos(30)
+ 	var slytherin = new Equipo("slytherin")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	suerte.tipoDeSuerte(buenaSuerte)
+	
+	
+	harry.metrosRecorridos(4925)
+	harry.hacerJugada(slytherin)
+	assert.equals(180,gryffindor.puntos())
+	assert.equals(60,harry.skills())
+}
+
+
+test "Si Harry estaba buscando la Snitch desde hace 3 turnos 
+y lo golpea una Bludger de Slytherin, debería perder los turnos de búsqueda acumulados."{
+	var gryffindor = new Equipo("gryffindor")
+	gryffindor.puntos(30)
+ 	var slytherin = new Equipo("slytherin")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	
+	
+	harry.buscandoSnitch()
+	harry.buscandoSnitch()
+	harry.buscandoSnitch()
+	
+	harry.golpeado(slytherin)
+	assert.equals(0,harry.turnosDeBusqueda())
 	
 }
-test "Si Montague tiene la Quaffle, hace una jugada contra Gryffindor y no lo bloquean porque tienen mala suerte, sus skills quedan en 40, Slytherin 
-gana 10 puntos y Gryffindor se queda con la Quaffle."
-{
-	const montague=jugador.grahamMontague()
-	const gryffindor=new Equipo([jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),montague,jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
-	montague.poseeQuaffle(true)
-	montague.realizarJugadaTest(gryffindor,true)
-	assert.that(montague.skills()==40)
-	assert.that(slytherin.puntaje()==10)
-	assert.that(gryffindor.alguienTieneQuaffle())
+
+
+
+test "Si Harry estaba persiguiendo la Snitch estando a 75 metros de distancia de atraparla y lo golpea una Bludger
+ de Slytherin, debería haber perdido de vista la Snitch, y al encontrarla nuevamente 
+estará a 5000 metros de distancia"{
+	var gryffindor = new Equipo("gryffindor")
+	
+ 	var slytherin = new Equipo("slytherin")
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	suerte.tipoDeSuerte(buenaSuerte)
+	mercadoDeEscobas.velocidadMercado(50.0)
+	
+	
+	harry.metrosRecorridos(4925)
+	harry.golpeado(slytherin)
+	harry.encontroSnitch()
+	assert.equals(0,harry.metrosRecorridos())
+	
 }
-test "Si Katie hace una jugada contra Slytherin, como es bloqueada Gryffindor no gana puntos y Slytherin se queda con la Quaffle.
-"
-{const katie=jugador.katieBell()
-	const montague=jugador.grahamMontague()
-	const gryffindor=new Equipo([jugador.harryPotter(),jugador.ronWeasley(),jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),katie,jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),montague,jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
-	const puntos=gryffindor.puntaje()
-	katie.poseeQuaffle(true)
-	katie.realizarJugada(slytherin)
-	assert.that(puntos==gryffindor.puntaje())
-	assert.that(slytherin.alguienTieneQuaffle())
-	assert.that(!katie.poseeQuaffle())
+
+
+
+
+
+test "Si Harry (luego de ganar 100 puntos de skills) estaba persiguiendo la Snitch 
+estando a 75 metros de distancia de atraparla y lo golpea una Bludger de Slytherin,
+ no debería haber perdido de vista la Snitch porque sólo quedó aturdido. Luego de hacer una jugada debería seguir estando a 75 metros,
+ y luego de una segunda jugada debería tener 158 de skills por atrapar la Snitch."{
+	var gryffindor = new Equipo("gryffindor")
+	mercadoDeEscobas.velocidadMercado(50.0)
+	gryffindor.puntos(30)
+ 	var slytherin = new Equipo("slytherin")
+ 	var ron = new Guardian(gryffindor,30.0,60.0,50.0,new Nimbus(0.5,2000))
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	
+	
+	
+	harry.aumentarSkills(100)
+	harry.metrosRecorridos(4925)
+	harry.golpeado(slytherin)
+	harry.hacerJugada(slytherin)
+	harry.hacerJugada(slytherin)
+	
+	assert.equals(158,harry.skills())
+	
+	
 }
-test"Si Ron hace una jugada contra Slytherin, sus skills no varían y los puntos tampoco."{
-	const ron=jugador.ronWeasley()
-	const gryffindor=new Equipo([jugador.harryPotter(),ron,jugador.fredWeasley(),jugador.georgeWeasley(),jugador.ginnyWeasley(),jugador.katieBell(),jugador.angelinaJohnson()])
-	const slytherin=new Equipo([jugador.adrianPaucey(),jugador.vincentCrabbe(),jugador.grahamMontague(),jugador.dracoMalfoy(),jugador.milesBleatchley(),jugador.warrington(),jugador.gregoryGoyle()])
-	const puntos=gryffindor.puntaje()
-	const skills=ron.skills()
-	ron.realizarJugada(slytherin)
-	assert.that(ron.skills()==skills)
-	assert.that(gryffindor.puntaje()==puntos)
+
+
+test "Si Fred hace una jugada contra Slytherin, con Ginny teniendo la Quaffle y Malfoy a
+ 100 metros de conseguir la Snitch, elige como blanco (de entre Malfoy, Montague y Bletchley) a
+ Montague. Su puntería no es suficiente alta, pero con buena suerte lo 
+golpea y sus skills quedan en 85, mientras que los de Montague quedan en 33."{
+	var gryffindor = new Equipo("gryffindor")
+	
+	
+	
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(buenaSuerte)
+	
+	ginny.obtenerQuaffle()
+	draco.metrosRecorridos(4900)
+	fred.hacerJugada(slytherin)
+	assert.equals(85,fred.skills())
+	assert.equals(33,graham.skills())
+	
+}
+
+
+
+test "Un bloqueo de Slytherin a Katie, incluso con mala suerte, es exitoso porque Montague le pasa
+ el trapo, con lo cual Katie queda con 42 puntos de skills y Montague con 38.
+"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	
+	
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+		
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(malaSuerte)
+	
+	katie.obtenerQuaffle()
+	slytherin.bloquear(katie)
+	
+	
+	assert.equals(42,katie.skills())
+	assert.equals(38,graham.skills())
+	
+	
+}
+
+test "Si Goyle hace una jugada contra Gryffindor, con Ginny teniendo la Quaffle y Harry
+ buscando la Snitch, elige como blanco a Ginny (único blanco útil de Gryffindor). 
+Tiene mala suerte y no logra golpear a Ginny, sus skills quedan en 70 y Ginny sigue teniendo la Quaffle"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	
+	
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(malaSuerte)
+	
+	ginny.obtenerQuaffle()
+	harry.buscandoSnitch()
+	gregory.hacerJugada(gryffindor)
+	assert.equals(70,gregory.skills())
+	assert.that(ginny.poseeQuaffle())
+	
+}
+
+
+
+
+
+test "Si Goyle hace una jugada contra Gryffindor, con Ginny luego de perder 2
+ puntos de skills pero teniendo la Quaffle y Harry buscando la Snitch,
+ elige como blanco a Ginny. Aunque tenga mala suerte puede golpear a Ginny, sus skills 
+quedan en 75 y Ginny ya no tiene la Quaffle"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	
+	
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	
+	
+	
+	var slytherin = new Equipo("Slytherin")
+	
+	
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+		
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(malaSuerte)
+	
+	ginny.obtenerQuaffle()
+	ginny.pierdeSkills(2)
+	harry.buscandoSnitch()
+	gregory.hacerJugada(gryffindor)
+	assert.equals(75,gregory.skills())
+	assert.notThat(ginny.poseeQuaffle())
+	
+}
+
+
+
+test "Si Ron gana 200 puntos de skills y cambia su escoba por una Nimbus 2016 en perfecto estado, 
+un bloqueo de Gryffindor a Montague con mala suerte será exitoso porque Ron le pasa el trapo. 
+Los skills de Montague quedan en 32 y los de Ron, que es guardián, quedan en 240."{
+	var gryffindor = new Equipo("gryffindor")
+		
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,new Nimbus(0.5,2000))
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+
+	var slytherin = new Equipo("Slytherin")
+	
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	graham.obtenerQuaffle()
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(malaSuerte)
+	ron.aumentarSkills(200)
+	ron.escoba(new Nimbus(1.0,2016))
+	
+	
+	gryffindor.bloquear(graham)
+	
+	
+	
+	assert.equals(32,graham.skills())
+	assert.equals(240,ron.skills())
+	
+	
+}
+
+
+
+
+test "Si Warrington tiene la Quaffle y Montague hace una jugada contra Gryffindor, 
+sus skills no varían, los puntos tampoco y la Quaffle la sigue teniendo Warrington."{
+	var gryffindor = new Equipo("gryffindor")
+		
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,new Nimbus(0.5,2000))
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+
+	var slytherin = new Equipo("Slytherin")
+	
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var skillsAnteriores = graham.skills()
+	warrington.obtenerQuaffle()
+	var puntosAnteriores = slytherin.puntos()
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(malaSuerte)
+	graham.hacerJugada(gryffindor)
+
+	
+	assert.equals(skillsAnteriores,graham.skills())
+	assert.equals(puntosAnteriores,slytherin.puntos())
+	assert.that(warrington.poseeQuaffle())
+	
+	
+}
+
+
+test "Si Montague tiene la Quaffle, hace una jugada contra Gryffindor y no lo bloquean
+ porque tienen mala suerte, sus skills quedan en 40, Slytherin gana 10 puntos y Gryffindor se
+ queda con la Quaffle."{
+	var gryffindor = new Equipo("gryffindor")
+		
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,new Nimbus(0.5,2000))
+	var ginny = new Cazador(gryffindor,50.0,50.0,40.0,new Nimbus(0.5,2000),5)
+	var harry = new Buscador(gryffindor,30.0,60.0,80.0,saetaDeFuego,2)
+	var angelina = new Cazador(gryffindor,40.0,55.0,40.0,saetaDeFuego,3.0)
+	var fred = new Golpeador(gryffindor,80.0,80.0,90.0,new Nimbus(0.8,2001),18)
+	var george = new Golpeador(gryffindor,70.0,80.0,70.0,new Nimbus(0.5,2001),17.0)
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+
+	var slytherin = new Equipo("Slytherin")
+	
+	
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	
+	
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(malaSuerte)
+	
+	graham.obtenerQuaffle()
+	gryffindor.bloquear(graham)
+	graham.hacerJugada(gryffindor)
+	
+	assert.equals(10,slytherin.puntos())
+	
+	
+}
+
+
+test "Si Katie hace una jugada contra Slytherin, como es bloqueada Gryffindor no gana puntos y Slytherin
+ se queda con la Quaffle"{
+	var gryffindor = new Equipo("gryffindor")
+	
+	var katie = new Cazador(gryffindor,45.0,60.0,30.0,saetaDeFuego,4)
+
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+
+	
+	
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(malaSuerte)
+	
+	katie.obtenerQuaffle()
+	slytherin.bloquear(katie)
+	katie.hacerJugada(slytherin)
+	
+	assert.equals(0,gryffindor.puntos())
+	
+	
+}
+
+
+test "Si Ron hace una jugada contra Slytherin, sus skills no varían y los puntos tampoco."{
+	var gryffindor = new Equipo("gryffindor")
+	
+	var ron = new Guardian(gryffindor,30.0,60.0,50.0,new Nimbus(0.5,2000))
+
+	var slytherin = new Equipo("Slytherin")
+	var adrian = new Cazador(slytherin,30.0,80.0,70.0,new Nimbus(0.7,2000),4.0)
+	var graham = new Cazador(slytherin,35.0,65.0,85.0,saetaDeFuego,6.0)
+	var gregory = new Golpeador(slytherin,70.0,65.0,90.0,saetaDeFuego,15.0)
+	var draco = new Buscador(slytherin,27.0,50.0,30.0,new Nimbus(1.0,2001),7.0)
+	var crabbe = new Golpeador(slytherin,80.0,75.0,80.0,saetaDeFuego,8)
+	var miles = new Guardian(slytherin,20.0,80.0,50.0,saetaDeFuego)
+	var warrington = new Cazador(slytherin,32.0,50.0,70.0,saetaDeFuego,5)
+	
+	mercadoDeEscobas.velocidadMercado(50.0)
+	suerte.tipoDeSuerte(malaSuerte)
+	var puntosAnteriores = gryffindor.puntos()
+	var skillsAnteriores = ron.skills()
+	ron.hacerJugada(slytherin)
+	
+	assert.equals(puntosAnteriores,gryffindor.puntos())
+	assert.equals(skillsAnteriores,ron.skills())
+	
+	
+}
